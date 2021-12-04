@@ -73,7 +73,7 @@ class AuthController extends Controller
         return User::find($request->id);
     }
 
-    public function seterror()
+    public function greet()
     {
         return response()->json([
             'message' => 'l\'utilisateur n\'est pas connecte'

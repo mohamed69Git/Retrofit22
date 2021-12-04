@@ -33,3 +33,6 @@ Route::post('users/login', [AuthController::class, 'login']);
 
 Route::get("simple-qrcode", [SimpleQRcodeController::class, 'generate']);
 
+Route::get("greeting", [AuthController::class, 'greet']);
+
+
