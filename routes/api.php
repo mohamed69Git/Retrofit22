@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AchatTicketController;
+use App\Http\Controllers\CompteController;
+use App\Http\Controllers\EntreRestoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SimpleQRcodeController;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +15,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API! openweather9815@@
+| is assigned the "api" middleware group. Enjoy building your API!
 |
 */
 
@@ -21,18 +23,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::resource('posts', PostController::class);
+
+
+
+
+Route::post('/register', [UserController::class, 'register']);
+
+// Route::middleware(['middleware' => ['second']], function () {
+//     Route::get('/hello', [UserController::class, 'login']);
+// });
+
+Route::post('/login', [UserController::class, 'login']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('users/logout', [AuthController::class, 'logout']);
 });
-Route::get('getError', [AuthController::class, 'seterror']);
-Route::get('users/emails', [AuthController::class, 'apiemail']);
-
-Route::post('users/register ', [AuthController::class, 'register']);
-Route::post('users/login', [AuthController::class, 'login']);
-
-Route::get("simple-qrcode", [SimpleQRcodeController::class, 'generate']);
-
-Route::get("greeting", [AuthController::class, 'greet']);
-
-
+Route::post('/envoyer', [CompteController::class, 'envoyer']);
+Route::post('/acheter', [AchatTicketController::class, 'acheter']);
+Route::get('/compte/{id}', [CompteController::class, 'getCompte']);
+Route::post('/apply', [EntreRestoController::class, 'apply']);
+Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/findUser/{id}', [UserController::class, 'findUser']);
+Route::get('/helloo', [UserController::class, 'sayHello']);
+Route::get('/nice', [CompteController::class, 'sayHello']);
+Route::get('/studentRestoVisitCount/{id}', [EntreRestoController::class, 'studentRestoVisitCount']);
